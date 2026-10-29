@@ -5,6 +5,7 @@ Git-панель для VS Code в духе **Git tool window из PyCharm**: с
 ![PyCharm Git Log](media/screenshot.png)
 
 - Репозиторий: <https://github.com/DazzzleKK/pycharm-git-log>
+- DSH-версия того же интерфейса: <https://github.com/DazzzleKK/dsh-code-git-workbench>
 - Инструкции для агента: [AGENTS.md](AGENTS.md)
 
 ## Что уже есть
