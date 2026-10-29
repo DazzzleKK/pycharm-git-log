@@ -1,0 +1,156 @@
+{
+  "name": "pycharm-git-log",
+  "displayName": "PyCharm Git Log",
+  "description": "Git tool window in PyCharm style: local and remote branches, commit log, checkout, cherry-pick, merge, rebase, reset, tags, push/pull.",
+  "version": "0.1.0",
+  "publisher": "keril",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DazzzleKK/pycharm-git-log.git"
+  },
+  "homepage": "https://github.com/DazzzleKK/pycharm-git-log#readme",
+  "bugs": {
+    "url": "https://github.com/DazzzleKK/pycharm-git-log/issues"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "SCM Providers"
+  ],
+  "keywords": [
+    "git",
+    "pycharm",
+    "log",
+    "branches",
+    "cherry-pick",
+    "merge",
+    "rebase"
+  ],
+  "icon": "media/icon.png",
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "pycharmGit.openLog",
+        "title": "Open Git Log",
+        "category": "PyCharm Git",
+        "icon": "$(git-branch)"
+      },
+      {
+        "command": "pycharmGit.refresh",
+        "title": "Refresh",
+        "category": "PyCharm Git",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "pycharmGit.fetch",
+        "title": "Fetch All",
+        "category": "PyCharm Git",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "pycharmGit.pull",
+        "title": "Pull",
+        "category": "PyCharm Git",
+        "icon": "$(arrow-down)"
+      },
+      {
+        "command": "pycharmGit.push",
+        "title": "Push",
+        "category": "PyCharm Git",
+        "icon": "$(arrow-up)"
+      },
+      {
+        "command": "pycharmGit.newBranch",
+        "title": "New Branch...",
+        "category": "PyCharm Git",
+        "icon": "$(git-branch)"
+      },
+      {
+        "command": "pycharmGit.checkoutBranch",
+        "title": "Checkout Branch...",
+        "category": "PyCharm Git"
+      },
+      {
+        "command": "pycharmGit.showOutput",
+        "title": "Show Output Log",
+        "category": "PyCharm Git"
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "pycharmGit.openLog",
+          "when": "scmProvider == git",
+          "group": "navigation@1"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "pycharmGit.openLog",
+        "key": "ctrl+alt+g",
+        "mac": "cmd+alt+g"
+      }
+    ],
+    "configuration": {
+      "title": "PyCharm Git",
+      "properties": {
+        "pycharmGit.maxCommits": {
+          "type": "number",
+          "default": 500,
+          "minimum": 50,
+          "maximum": 10000,
+          "description": "Number of commits loaded per page. Use \"Load more\" at the bottom of the list for older commits."
+        },
+        "pycharmGit.dateStyle": {
+          "type": "string",
+          "enum": [
+            "absolute",
+            "relative"
+          ],
+          "default": "absolute",
+          "description": "How commit dates are shown in the log."
+        },
+        "pycharmGit.confirmDestructive": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask for confirmation before hard reset, branch delete, force push."
+        },
+        "pycharmGit.autoRefreshOnFocus": {
+          "type": "boolean",
+          "default": true,
+          "description": "Refresh the log when the VS Code window regains focus."
+        },
+        "pycharmGit.showGraph": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the commit graph column."
+        },
+        "pycharmGit.remoteName": {
+          "type": "string",
+          "default": "",
+          "description": "Default remote for push/tracking (empty = origin or the first remote)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "check": "tsc -p . --noEmit",
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "test": "npm run build && node test/integration.cjs",
+    "test:graph": "node test/graph-check.cjs",
+    "package": "npm run check && node esbuild.mjs --production && vsce package --no-dependencies --allow-missing-repository --no-rewrite-relative-links -o pycharm-git-log.vsix"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/codicons": "^0.0.36",
+    "@vscode/vsce": "^3.2.1",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.0"
+  }
+}
